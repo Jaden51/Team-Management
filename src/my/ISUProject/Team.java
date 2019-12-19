@@ -101,6 +101,10 @@ public class Team {
             }
         }
     }
+    
+    public ArrayList<String> getPoints() {
+        return points;
+    }
 
     public void clearPlayers() {
         players.clear();
