@@ -17,8 +17,6 @@ import java.security.NoSuchAlgorithmException;
 import java.util.NoSuchElementException;
 import java.util.StringTokenizer;
 import java.util.ArrayList;
-import java.util.Arrays;
-import javax.swing.DefaultComboBoxModel;
 
 /**
  *

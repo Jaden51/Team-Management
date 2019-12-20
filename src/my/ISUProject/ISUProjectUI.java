@@ -18,11 +18,7 @@ import java.util.NoSuchElementException;
 import java.util.StringTokenizer;
 import java.util.ArrayList;
 import javax.swing.DefaultComboBoxModel;
-import javax.swing.DefaultListModel;
-import javax.swing.JComboBox;
-import javax.swing.text.BadLocationException;
-import javax.swing.*;
-import javax.swing.text.*;
+import org.jdesktop.swingx.autocomplete.AutoCompleteDecorator;
 
 /**
  *
@@ -35,27 +31,17 @@ public class ISUProjectUI extends javax.swing.JFrame {
     ArrayList<String> playerStats = new ArrayList<>();
     ArrayList<String> playersAvailable = new ArrayList<>();
     ArrayList<String> teamList = new ArrayList<>();
+    ArrayList<String> sortNames = new ArrayList<>();
+    ArrayList<String> sortPoints = new ArrayList<>();
     Team team = new Team();
-    
+
     /**
      * Creates new form ISUProjectUI
      */
     public ISUProjectUI() {
         initComponents();
         updateTeams();
-        playerList.setModel(new javax.swing.AbstractListModel() {
-            String[] strings = {};
-
-            @Override
-            public int getSize() {
-                return strings.length;
-            }
-
-            @Override
-            public Object getElementAt(int i) {
-                return strings[i];
-            }
-        });
+        AutoCompleteDecorator.decorate(playersCombo);
     }
 
     /**
@@ -73,7 +59,9 @@ public class ISUProjectUI extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
-        jLabel6 = new javax.swing.JLabel();
+        jLabel7 = new javax.swing.JLabel();
+        sortByName = new javax.swing.JButton();
+        sortByPoints = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         playerList = new javax.swing.JList();
         playersCombo = new javax.swing.JComboBox();
@@ -83,11 +71,12 @@ public class ISUProjectUI extends javax.swing.JFrame {
         jLabel5 = new javax.swing.JLabel();
         pointsField = new javax.swing.JTextField();
         jScrollPane3 = new javax.swing.JScrollPane();
-        jList2 = new javax.swing.JList();
+        searchList1 = new javax.swing.JList();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        sortedList = new javax.swing.JList();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        teamCombo.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
         teamCombo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 teamComboActionPerformed(evt);
@@ -107,7 +96,21 @@ public class ISUProjectUI extends javax.swing.JFrame {
 
         jLabel4.setText("Players Available");
 
-        jLabel6.setText("Search Players by Points");
+        jLabel7.setText("Search Players by Team");
+
+        sortByName.setText("Sort By Name");
+        sortByName.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                sortByNameActionPerformed(evt);
+            }
+        });
+
+        sortByPoints.setText("Sort By Points");
+        sortByPoints.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                sortByPointsActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -117,42 +120,48 @@ public class ISUProjectUI extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(teamCombo, javax.swing.GroupLayout.PREFERRED_SIZE, 183, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 778, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(teamCombo, javax.swing.GroupLayout.PREFERRED_SIZE, 183, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 778, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jLabel3)
                         .addGap(176, 176, 176)
                         .addComponent(jLabel4)
-                        .addGap(67, 67, 67)
-                        .addComponent(jLabel6)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGap(54, 54, 54)
+                        .addComponent(jLabel7)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(sortByName)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(sortByPoints)
+                        .addGap(37, 37, 37))))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 61, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(teamCombo, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(29, 29, 29)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 18, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel4)
-                    .addComponent(jLabel6)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 14, Short.MAX_VALUE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(teamCombo, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(29, 29, 29)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 18, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel4)
+                            .addComponent(jLabel7)))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(sortByName)
+                        .addComponent(sortByPoints))))
         );
 
-        playerList.setModel(new javax.swing.AbstractListModel() {
-            String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
-            public int getSize() { return strings.length; }
-            public Object getElementAt(int i) { return strings[i]; }
-        });
         jScrollPane1.setViewportView(playerList);
 
         playersCombo.setEditable(true);
-        playersCombo.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
         tradeBtn.setText("Trade");
         tradeBtn.addActionListener(new java.awt.event.ActionListener() {
@@ -163,8 +172,6 @@ public class ISUProjectUI extends javax.swing.JFrame {
 
         jButton2.setText("Cancel");
 
-        toTradeCombo.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-
         jLabel5.setText("Your Players");
 
         pointsField.addActionListener(new java.awt.event.ActionListener() {
@@ -173,12 +180,9 @@ public class ISUProjectUI extends javax.swing.JFrame {
             }
         });
 
-        jList2.setModel(new javax.swing.AbstractListModel() {
-            String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
-            public int getSize() { return strings.length; }
-            public Object getElementAt(int i) { return strings[i]; }
-        });
-        jScrollPane3.setViewportView(jList2);
+        jScrollPane3.setViewportView(searchList1);
+
+        jScrollPane2.setViewportView(sortedList);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -204,10 +208,12 @@ public class ISUProjectUI extends javax.swing.JFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addGap(78, 78, 78)
                         .addComponent(jLabel5)))
-                .addGap(33, 33, 33)
+                .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(pointsField, javax.swing.GroupLayout.PREFERRED_SIZE, 117, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 117, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(pointsField, javax.swing.GroupLayout.PREFERRED_SIZE, 151, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 151, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(80, 80, 80)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 177, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -231,7 +237,8 @@ public class ISUProjectUI extends javax.swing.JFrame {
                                     .addComponent(tradeBtn)
                                     .addComponent(jButton2)))
                             .addComponent(jScrollPane3, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)))
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
                 .addContainerGap(239, Short.MAX_VALUE))
         );
 
@@ -267,6 +274,7 @@ public class ISUProjectUI extends javax.swing.JFrame {
             }
         }
         playersCombo.setModel(new DefaultComboBoxModel(playersAvailable.toArray()));
+        getContentPane().add(playersCombo);
     }//GEN-LAST:event_teamComboActionPerformed
 
     private void tradeBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tradeBtnActionPerformed
@@ -302,9 +310,72 @@ public class ISUProjectUI extends javax.swing.JFrame {
     }//GEN-LAST:event_tradeBtnActionPerformed
 
     private void pointsFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_pointsFieldActionPerformed
-        String minPoints = pointsField.getText();
-        ArrayList<String> points = team.getPoints();
+        searchList1.removeAll();
+        ArrayList<String> players = new ArrayList<>();
+        for (int i = 0; i < playerStats.size(); i++) {
+            if (playerStats.get(i).contains(pointsField.getText())) {
+                String[] split = playerStats.get(i).split(";");
+                players.add(split[1]);
+                searchList1.setModel(new javax.swing.AbstractListModel() {
+                    ArrayList<String> strings = players;
+
+                    @Override
+                    public int getSize() {
+                        return strings.size();
+                    }
+
+                    @Override
+                    public Object getElementAt(int i) {
+                        return strings.get(i);
+                    }
+                });
+            }
+        }
     }//GEN-LAST:event_pointsFieldActionPerformed
+
+    private void sortByNameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_sortByNameActionPerformed
+        sortedList.removeAll();
+        for (String playerStat : playerStats) {
+            String[] split = playerStat.split(";");
+            sortNames.add(split[1]);
+        }
+        sortNames = sortString(sortNames);
+        sortedList.setModel(new javax.swing.AbstractListModel() {
+            ArrayList<String> strings = sortNames;
+
+            @Override
+            public int getSize() {
+                return strings.size();
+            }
+
+            @Override
+            public Object getElementAt(int i) {
+                return strings.get(i);
+            }
+        });
+    }//GEN-LAST:event_sortByNameActionPerformed
+
+    private void sortByPointsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_sortByPointsActionPerformed
+        sortedList.removeAll();
+        for (String playerStat : playerStats) {
+            String[] split = playerStat.split(";");
+            sortPoints.add(split[3]);
+        }
+        sortPoints = sortString(sortNames);
+        sortedList.setModel(new javax.swing.AbstractListModel() {
+            ArrayList<String> strings = sortNames;
+
+            @Override
+            public int getSize() {
+                return strings.size();
+            }
+
+            @Override
+            public Object getElementAt(int i) {
+                return strings.get(i);
+            }
+        });
+    }//GEN-LAST:event_sortByPointsActionPerformed
 
     /**
      * @param args the command line arguments
@@ -346,9 +417,6 @@ public class ISUProjectUI extends javax.swing.JFrame {
         team.clearPlayers();
         team.setPlayers();
         team.setPlayersOnly();
-        DefaultListModel model = new DefaultListModel();
-        model.clear();
-        playerList.setModel(model);
         playerList.removeAll();
 
         toTradeCombo.setModel(new DefaultComboBoxModel(team.getPlayersOnly().toArray()));
@@ -391,7 +459,24 @@ public class ISUProjectUI extends javax.swing.JFrame {
         }
         teamCombo.setModel(new DefaultComboBoxModel(teamList.toArray()));
     }
-    
+
+    public static ArrayList sortString(ArrayList<String> listIn) {
+        for (int i = 0; i < listIn.size(); i++) { //repeat for list size
+            int index = i; //set index to i
+            for (int j = i + 1; j < listIn.size(); j++) {
+                if (listIn.get(j).compareTo(listIn.get(index)) < 0) { //if list at j is less than list at index, make a swap
+                    index = j; //searching for lowest index  
+                }
+            }
+            if (index != i) { //if index does not equal to i, swap the list item at i with the item at index
+                String temp = listIn.get(index);
+                listIn.set(index, listIn.get(i));
+                listIn.set(i, temp);
+            }
+        }
+        return listIn;
+    }
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton2;
@@ -400,17 +485,20 @@ public class ISUProjectUI extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
-    private javax.swing.JLabel jLabel6;
-    private javax.swing.JList jList2;
+    private javax.swing.JLabel jLabel7;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JList playerList;
     private javax.swing.JComboBox playersCombo;
     private javax.swing.JTextField pointsField;
+    private javax.swing.JList searchList1;
+    private javax.swing.JButton sortByName;
+    private javax.swing.JButton sortByPoints;
+    private javax.swing.JList sortedList;
     private javax.swing.JComboBox teamCombo;
     private javax.swing.JComboBox toTradeCombo;
     private javax.swing.JButton tradeBtn;
     // End of variables declaration//GEN-END:variables
 }
-
