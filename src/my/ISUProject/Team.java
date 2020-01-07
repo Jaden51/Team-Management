@@ -33,10 +33,6 @@ public class Team {
     private ArrayList<String> assists = new ArrayList<>();
     File playerList = new File("playerData.txt");
 
-    public Team() {
-
-    }
-
     public void setTeam(String t) {
         team = t;
     }
@@ -54,7 +50,7 @@ public class Team {
             }
             sc.close();
         } catch (FileNotFoundException ex) {
-            Logger.getLogger(ISUProjectUI.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
         }
         for (String player : players) {
             if (player.contains(team)) {
@@ -76,7 +72,7 @@ public class Team {
             }
             sc.close();
         } catch (FileNotFoundException ex) {
-            Logger.getLogger(ISUProjectUI.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
         }
         for (String player : players) {
             if (player.contains(team)) {
