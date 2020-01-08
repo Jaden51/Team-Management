@@ -66,7 +66,6 @@ public class Player {
 
     public void createPlayer() {
         player.add(team + ";" + name + ";" + position + ";" + points + ";" + rebounds + ";" + assists);
-        System.out.println(player);
         try {
             PrintWriter output = new PrintWriter(playerList); //new PrintWriter to the file
             for (String player1 : player) { //for every element in the array list, print out the data
