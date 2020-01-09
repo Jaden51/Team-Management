@@ -101,7 +101,7 @@ public class Main extends javax.swing.JFrame {
         reboundsEdit = new javax.swing.JTextField();
         assistsEdit = new javax.swing.JTextField();
         jLabel16 = new javax.swing.JLabel();
-        jButton1 = new javax.swing.JButton();
+        editBtn = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -203,10 +203,10 @@ public class Main extends javax.swing.JFrame {
         jLabel16.setFont(new java.awt.Font("Cambria", 0, 14)); // NOI18N
         jLabel16.setText("Search By Team or Position");
 
-        jButton1.setText("Edit");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        editBtn.setText("Edit");
+        editBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                editBtnActionPerformed(evt);
             }
         });
 
@@ -265,7 +265,7 @@ public class Main extends javax.swing.JFrame {
                                             .addGap(0, 0, Short.MAX_VALUE)
                                             .addComponent(searchField, javax.swing.GroupLayout.PREFERRED_SIZE, 165, javax.swing.GroupLayout.PREFERRED_SIZE)))
                                     .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 165, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                            .addComponent(jButton1)))
+                            .addComponent(editBtn)))
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
@@ -334,12 +334,13 @@ public class Main extends javax.swing.JFrame {
                     .addComponent(deleteCombo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel16))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(teamField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel8)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(teamEdit, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(deleteBtn)
-                    .addComponent(searchField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(teamField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jLabel8)
+                        .addComponent(deleteBtn)
+                        .addComponent(searchField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(9, 9, 9)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
@@ -371,7 +372,7 @@ public class Main extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(addPlayer)
-                    .addComponent(jButton1))
+                    .addComponent(editBtn))
                 .addGap(41, 41, 41))
         );
 
@@ -412,25 +413,45 @@ public class Main extends javax.swing.JFrame {
 
     private void searchFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchFieldActionPerformed
         searchList1.removeAll();
-        ArrayList<String> players = new ArrayList<>();
-        for (int i = 0; i < playerStats.size(); i++) {
-            if (playerStats.get(i).contains(searchField.getText())) {
-                String[] split = playerStats.get(i).split(";");
-                players.add(split[1]);
-                searchList1.setModel(new javax.swing.AbstractListModel() {
-                    ArrayList<String> strings = players;
+        ArrayList<String> error = new ArrayList<>();
+        error.add("Error:");
+        error.add("Please enter a position");
+        String search = searchField.getText();
+        ArrayList<String> player1 = new ArrayList<>();
+        if (search.equals("Guard") || search.equals("Forward") || search.equals("Center")) {
+            for (int i = 0; i < playerStats.size(); i++) {
+                if (playerStats.get(i).contains(search)) {
+                    String[] split = playerStats.get(i).split(";");
+                    player1.add(split[1]);
+                    searchList1.setModel(new javax.swing.AbstractListModel() {
+                        ArrayList<String> strings = player1;
 
-                    @Override
-                    public int getSize() {
-                        return strings.size();
-                    }
+                        @Override
+                        public int getSize() {
+                            return strings.size();
+                        }
 
-                    @Override
-                    public Object getElementAt(int i) {
-                        return strings.get(i);
-                    }
-                });
+                        @Override
+                        public Object getElementAt(int i) {
+                            return strings.get(i);
+                        }
+                    });
+                }
             }
+        } else {
+            searchList1.setModel(new javax.swing.AbstractListModel() {
+                ArrayList<String> strings = error;
+
+                @Override
+                public int getSize() {
+                    return strings.size();
+                }
+
+                @Override
+                public Object getElementAt(int i) {
+                    return strings.get(i);
+                }
+            });
         }
     }//GEN-LAST:event_searchFieldActionPerformed
 
@@ -480,6 +501,7 @@ public class Main extends javax.swing.JFrame {
         for (String playerStat : playerStats) {
             String[] split = playerStat.split(";");
             double temp = Double.parseDouble(split[3]);
+            
             sortPoints.add(temp);
         }
 
@@ -538,9 +560,10 @@ public class Main extends javax.swing.JFrame {
     }//GEN-LAST:event_sortByNameActionPerformed
 
     private void teamComboActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_teamComboActionPerformed
+        team.clearPlayers();
+        playerList.removeAll();
         String teamStr = teamCombo.getSelectedItem().toString();
         team.setTeam(teamStr);
-        teamCombo.setEnabled(false);
         team.setPlayersOnly();
         team.setStats();
         toTradeCombo.setModel(new DefaultComboBoxModel(team.getPlayersOnly().toArray()));
@@ -586,17 +609,33 @@ public class Main extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_editComboActionPerformed
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        String editTeam = teamEdit.getText();
-        String editName = nameEdit.getText();
-        String editPos = positionEdit.getText();
-        String editPoints = pointsEdit.getText();
-        String editReb = reboundsEdit.getText();
-        String edtiAst = assistsEdit.getText();
-        
-        
-        
-    }//GEN-LAST:event_jButton1ActionPerformed
+    private void editBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_editBtnActionPerformed
+        for (int i = 0; i < playerStats.size(); i++) {
+            if (playerStats.get(i).contains(nameEdit.getText())) {
+                playerStats.remove(i);
+                playerStats.add(teamEdit.getText() + ";" + nameEdit.getText() + ";"
+                        + positionEdit.getText() + ";" + pointsEdit.getText() + ";"
+                        + reboundsEdit.getText() + ";" + assistsEdit.getText());
+            }
+        }
+        try {
+            PrintWriter output = new PrintWriter(playerData);
+            output.print("");
+            for (String playerStat : playerStats) {
+                output.println(playerStat);
+            }
+            output.close();
+        } catch (FileNotFoundException ex) {
+            System.out.printf("ERROR %s\n", ex);
+        }
+        updateTeams();
+        teamEdit.setText(null);
+        nameEdit.setText(null);
+        positionEdit.setText(null);
+        pointsEdit.setText(null);
+        reboundsEdit.setText(null);
+        assistsEdit.setText(null);
+    }//GEN-LAST:event_editBtnActionPerformed
 
     /**
      * @param args the command line arguments
@@ -779,8 +818,8 @@ public class Main extends javax.swing.JFrame {
     private javax.swing.JTextField assistsField;
     private javax.swing.JButton deleteBtn;
     private javax.swing.JComboBox deleteCombo;
+    private javax.swing.JButton editBtn;
     private javax.swing.JComboBox editCombo;
-    private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
