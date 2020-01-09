@@ -498,6 +498,7 @@ public class Main extends javax.swing.JFrame {
     private void sortByPointsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_sortByPointsActionPerformed
         sortedList.removeAll();
         sortPoints.clear();
+        ArrayList<String> sorted = new ArrayList<>();
         for (String playerStat : playerStats) {
             String[] split = playerStat.split(";");
             double temp = Double.parseDouble(split[3]);
@@ -512,9 +513,21 @@ public class Main extends javax.swing.JFrame {
             sortPoints = sortPointsDescending(sortPoints);
             sortByPoints.setText("Sort By Points ↓");
         }
-
+        for (int i = 0; i < sortPoints.size(); i++) {
+            sorted.add(Double.toString(sortPoints.get(i)));
+        }
+        for (int i = 0; i < sorted.size(); i++) {
+            for (int j = 0; j < players.size(); j++) {
+                if (players.get(j).contains(sorted.get(i))) {
+                    sorted.set(i, "gay");
+                }
+            }
+            
+        }
+        System.out.println(sorted);
+        sorted.set(5, "gay");
         sortedList.setModel(new javax.swing.AbstractListModel() {
-            ArrayList<Double> strings = sortPoints;
+            ArrayList<String> strings = sorted;
 
             @Override
             public int getSize() {
