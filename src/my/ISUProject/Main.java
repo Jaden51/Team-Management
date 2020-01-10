@@ -502,7 +502,7 @@ public class Main extends javax.swing.JFrame {
         for (String playerStat : playerStats) {
             String[] split = playerStat.split(";");
             double temp = Double.parseDouble(split[3]);
-            
+
             sortPoints.add(temp);
         }
 
@@ -516,16 +516,15 @@ public class Main extends javax.swing.JFrame {
         for (int i = 0; i < sortPoints.size(); i++) {
             sorted.add(Double.toString(sortPoints.get(i)));
         }
+        System.out.println(sorted);
         for (int i = 0; i < sorted.size(); i++) {
-            for (int j = 0; j < players.size(); j++) {
-                if (players.get(j).contains(sorted.get(i))) {
-                    sorted.set(i, "gay");
+            for (int j = 0; j < sorted.size(); j++) {
+                String split[] = playerStats.get(j).split(";");
+                if (split[3].equals(sorted.get(i))) {
+                    sorted.set(i, players.get(j) + ": " + sorted.get(i));
                 }
             }
-            
         }
-        System.out.println(sorted);
-        sorted.set(5, "gay");
         sortedList.setModel(new javax.swing.AbstractListModel() {
             ArrayList<String> strings = sorted;
 
