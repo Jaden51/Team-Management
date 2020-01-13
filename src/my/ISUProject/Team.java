@@ -89,20 +89,34 @@ public class Team {
         for (String player : players) {
             if (player.contains(team)) {
                 String[] split = player.split(";");
-                points.add(split[3]);
-                rebounds.add(split[4]);
-                assists.add(split[5]);
+                points.add(split[1] + ": " + split[3]);
+                rebounds.add(split[1] + ": " + split[4]);
+                assists.add(split[1] + ": " + split[5]);
             }
         }
     }
-    
+
     public ArrayList<String> getPoints() {
         return points;
+    }
+
+    public ArrayList<String> getRebounds() {
+        return rebounds;
+    }
+
+    public ArrayList<String> getAssists() {
+        return assists;
     }
 
     public void clearPlayers() {
         players.clear();
         teamPlayers.clear();
         teamStats.clear();
+    }
+
+    public void clearStats() {
+        points.clear();
+        rebounds.clear();
+        assists.clear();
     }
 }
