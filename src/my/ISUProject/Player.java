@@ -8,14 +8,9 @@ package my.ISUProject;
 import java.util.Scanner;
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import java.io.EOFException;
-import java.security.NoSuchAlgorithmException;
-import java.util.NoSuchElementException;
-import java.util.StringTokenizer;
 import java.util.ArrayList;
 
 /**
@@ -53,15 +48,18 @@ public class Player {
     }
 
     public void setPoints(String p) {
-        points = p;
+        double temp = Double.parseDouble(p);
+        points = String.valueOf(temp);
     }
 
     public void setRebounds(String r) {
-        rebounds = r;
+        double temp = Double.parseDouble(r);
+        rebounds = String.valueOf(temp);
     }
 
     public void setAssists(String a) {
-        assists = a;
+        double temp = Double.parseDouble(a);
+        assists = String.valueOf(temp);
     }
 
     public void createPlayer() {
