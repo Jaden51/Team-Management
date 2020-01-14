@@ -459,6 +459,18 @@ public class Main extends javax.swing.JFrame {
         jLabel1.setText(" Sports Management App");
         jLabel1.setOpaque(true);
 
+        teamEdit.setEnabled(false);
+
+        nameEdit.setEnabled(false);
+
+        positionEdit.setEnabled(false);
+
+        pointsEdit.setEnabled(false);
+
+        reboundsEdit.setEnabled(false);
+
+        assistsEdit.setEnabled(false);
+
         jLabel16.setFont(new java.awt.Font("Cambria", 0, 14)); // NOI18N
         jLabel16.setText("Search By Team or Position");
 
@@ -633,7 +645,7 @@ public class Main extends javax.swing.JFrame {
                         .addComponent(sortByPoints)
                         .addComponent(sortByName))
                     .addComponent(jLabel4))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                         .addGroup(layout.createSequentialGroup()
@@ -709,10 +721,11 @@ public class Main extends javax.swing.JFrame {
                     .addComponent(addPlayer)
                     .addComponent(editBtn))
                 .addGap(7, 7, 7)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(exitBtn)
-                    .addComponent(userManualBtn)
-                    .addComponent(errorLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(errorLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(exitBtn)
+                        .addComponent(userManualBtn)))
                 .addContainerGap())
         );
 
@@ -757,10 +770,6 @@ public class Main extends javax.swing.JFrame {
 
     private void searchFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchFieldActionPerformed
         searchList1.removeAll();
-        ArrayList<String> error = new ArrayList<>();
-        error.add("Error:");
-        error.add("Please enter a position");
-        error.add("or a team");
         String search = searchField.getText();
         ArrayList<String> player1 = new ArrayList<>();
         if (search.equals("Guard") || search.equals("Forward") || search.equals("Center")) {
@@ -818,19 +827,7 @@ public class Main extends javax.swing.JFrame {
                 }
             }
         } else {
-            searchList1.setModel(new javax.swing.AbstractListModel() {
-                ArrayList<String> strings = error;
-
-                @Override
-                public int getSize() {
-                    return strings.size();
-                }
-
-                @Override
-                public Object getElementAt(int i) {
-                    return strings.get(i);
-                }
-            });
+            JOptionPane.showMessageDialog(this, "Please enter team or position");
         }
     }//GEN-LAST:event_searchFieldActionPerformed
 
@@ -968,6 +965,7 @@ public class Main extends javax.swing.JFrame {
     private void teamComboActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_teamComboActionPerformed
         team.clearPlayers();
         playerList.removeAll();
+        playersAvailable.clear();
         String teamStr = teamCombo.getSelectedItem().toString();
         team.setTeam(teamStr);
         team.setPlayersOnly();
@@ -1020,34 +1018,66 @@ public class Main extends javax.swing.JFrame {
                 assistsEdit.setText(split[5]);
             }
         }
+        teamEdit.setEnabled(true);
+        nameEdit.setEnabled(true);
+        positionEdit.setEnabled(true);
+        pointsEdit.setEnabled(true);
+        reboundsEdit.setEnabled(true);
+        assistsEdit.setEnabled(true);
     }//GEN-LAST:event_editComboActionPerformed
 
     private void editBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_editBtnActionPerformed
-        for (int i = 0; i < playerStats.size(); i++) {
-            if (playerStats.get(i).contains(nameEdit.getText())) {
-                playerStats.remove(i);
-                playerStats.add(teamEdit.getText() + ";" + nameEdit.getText() + ";"
-                        + positionEdit.getText() + ";" + pointsEdit.getText() + ";"
-                        + reboundsEdit.getText() + ";" + assistsEdit.getText());
-            }
-        }
+        String player = editCombo.getSelectedItem().toString();
+        boolean proceed;
         try {
-            PrintWriter output = new PrintWriter(playerData);
-            output.print("");
-            for (String playerStat : playerStats) {
-                output.println(playerStat);
-            }
-            output.close();
-        } catch (FileNotFoundException ex) {
-            System.out.printf("ERROR %s\n", ex);
+            double userInput = Double.parseDouble(pointsEdit.getText());
+            double userInput2 = Double.parseDouble(reboundsEdit.getText());
+            double userInput3 = Double.parseDouble(assistsEdit.getText());
+            proceed = true;
+        } catch (NumberFormatException ignore) {
+            proceed = false;
         }
-        updateTeams();
-        teamEdit.setText(null);
-        nameEdit.setText(null);
-        positionEdit.setText(null);
-        pointsEdit.setText(null);
-        reboundsEdit.setText(null);
-        assistsEdit.setText(null);
+        System.out.println(nameEdit.getText());
+        if (proceed == true) {
+            double temp1 = Double.parseDouble(pointsEdit.getText());
+            double temp2 = Double.parseDouble(reboundsEdit.getText());
+            double temp3 = Double.parseDouble(assistsEdit.getText());
+            System.out.println(temp1 + " " + temp2 + " " + temp3);
+            for (int i = 0; i < playerStats.size(); i++) {
+                if (playerStats.get(i).contains(player)) {
+                    System.out.println(playerStats.get(i));
+                    playerStats.remove(i);
+                    playerStats.add(teamEdit.getText() + ";" + nameEdit.getText() + ";"
+                            + positionEdit.getText() + ";" + String.valueOf(temp1) + ";"
+                            + String.valueOf(temp2) + ";" + String.valueOf(temp3));
+                }
+            }
+            try {
+                PrintWriter output = new PrintWriter(playerData);
+                output.print("");
+                for (String playerStat : playerStats) {
+                    output.println(playerStat);
+                }
+                output.close();
+            } catch (FileNotFoundException ex) {
+                System.out.printf("ERROR %s\n", ex);
+            }
+            updateTeams();
+            teamEdit.setText(null);
+            nameEdit.setText(null);
+            positionEdit.setText(null);
+            pointsEdit.setText(null);
+            reboundsEdit.setText(null);
+            assistsEdit.setText(null);
+            teamEdit.setEnabled(false);
+            nameEdit.setEnabled(false);
+            positionEdit.setEnabled(false);
+            pointsEdit.setEnabled(false);
+            reboundsEdit.setEnabled(false);
+            assistsEdit.setEnabled(false);
+        } else if (proceed == false) {
+            JOptionPane.showMessageDialog(this, "Invalid Input");
+        }
     }//GEN-LAST:event_editBtnActionPerformed
 
     private void userManualBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_userManualBtnActionPerformed
