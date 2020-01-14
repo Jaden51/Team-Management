@@ -5,12 +5,71 @@ Houston Rockets;P.J. Tucker;Forward;10.1;6.5;1.5
 Houston Rockets;Russell Westbrook;Guard;21.7;8.1;7.3
 Los Angeles Lakers;Anthony Davis;Center;26.0;9.1;3.2
 Los Angeles Lakers;Jared Dudley;Forward;1.3;0.7;0.7
-Los Angeles Lakers;Danny Green;Guard;8.3;3.5;1.2
+Los Angeles Lakers;Danny Green;Guard;8.4;3.5;1.2
 Los Angeles Lakers;Dwight Howard;Center;7.0;7;0.8
 Los Angeles Lakers;LeBron James;Forward;25.4;7;10.8
 Dallas Mavericks;Luka Doncic;Guard;29.7;9.7;8.9
 Dallas Mavericks;Kristaps Porzingis;Center;17.3;9.4;1.5
 Dallas Mavericks;Dwight Powell;Forward;8.7;5.4;1.4
-Dallas Mavericks;Jalen Brunson;Forward;7.7;2.5;3.4
+Dallas Mavericks;Jalen Brunson;Forward;7.8;2.5;3.4
 Dallas Mavericks;Tim Hardaway Jr.;Guard;13.8;2.6;1.7
-Houston Rockets;Jaden Hums;Guard;50.0;45.0;30.0
+Denver Nuggets;Nikola Jokic;Center;19.3;9.9;6.4
+Denver Nuggets;Jamal Murray;Guard;17.9;4.2;4.7
+Denver Nuggets;Will Barton;Guard;14.7;3.6;1.1
+Denver Nuggets;Paul Millsap;Forward;11.9;1.4;0.9
+Denver Nuggets;Gary Harris;Guard;11.0;2.2;1.5
+Los Angeles Clippers;Kawhi Leonard;Forward;25.9;7.5;5.1
+Los Angeles Clippers;Paul George;Forward;23.5;6.0;3.7
+Los Angeles Clippers;Lou Williams;Guard;19.8;3.0;6.3
+Los Angeles Clippers;Montrezl Harrell;Forward-Center;19.4;7.4;1.8
+Los Angeles Clippers;Landry Shamet;Guard;8.3;1.9;1.6
+Utah Jazz;Rudy Gobert;Center;14.8;14.4;1.6
+Utah Jazz;Royce O'Neale;Forward;6.4;4.9;2.4
+Utah Jazz;Donovan Mitchell;Guard;24.2;4.4;4.4
+Utah Jazz;Bojan Bogdanovic;Forward;21.0;4.3;2.1
+Utah Jazz;Joe Ingles;Forward;10.8;4.2;4.6
+Minnesota Timberwolves;Andrew Wiggins;Forward;23.2;5.1;3.3
+Minnesota Timberwolves;Noah Vonleh;Forward;4.2;4.1;0.9
+Minnesota Timberwolves;Karl-Anthony Towns;Center-Forward;26.5;11.7;4.4
+Minnesota Timberwolves;Jeff Teague;Guard;13.3;2.6;6.2
+Minnesota Timberwolves;Naz Reid;Center-Forward;9.0;2.9;1.0
+Phoenix Suns;Dario Saric;Forward;9.9;6.4;1.8
+Phoenix Suns;Kelly Oubre Jr.;Guard;18.5;6.4;1.6
+Phoenix Suns;Mikal Bridges;Forward;6.9;3.8;1.2
+Phoenix Suns;Devin Booker;Guard;25.8;3.8;6.5
+Phoenix Suns;Cameron Johnson;Center;7.7;2.9;0.9
+Portland Trail Blazers;Damian Lillard;Guard;26.8;4.1;7.6
+Portland Trail Blazers;CJ McCollum;Guard;21.9;4.2;3.8
+Portland Trail Blazers;Carmelo Anthony;Forward;16.3;6.1;1.4
+Portland Trail Blazers;Hassan Whiteside;Center;15.5;13.9;4.3
+Portland Trail Blazers;Rodney Hood;Forward;11.1;3.4;1.5
+Oklahoma City Thunder;Steven Adams;Center;12.0;10.2;2.7
+Oklahoma City Thunder;Darius Bazley;Forward;4.0;3.7;0.5
+Oklahoma City Thunder;Deonte Burton;Forward;2.3;1.3;0.4
+Oklahoma City Thunder;Hamidou Diallo;Guard;7.2;3.3;0.7
+Oklahoma City Thunder;Luguentz Dort;Guard;3.3;1.4;0.4
+Sacramento Kings;Trevor Ariza;Forward;6.1;4.7;1.5	
+Sacramento Kings;Harrison Barnes;Forward;15.2;4.8;2.2
+Sacramento Kings;Nemanja Bjelica;Forward;12.6;6.4;2.5
+Sacramento Kings;Bogdan Bogdanovic;Guard;14.5;3.0;3.6
+Sacramento Kings;Dewayne Dedmon;Center;4.9;4.0;0.3
+San Antonio Spurs;LaMarcus Aldridge;Center-Forward;18.9;7.6;2.5
+San Antonio Spurs;Marco Belinelli;Guard;5.4;1.6;1.2
+San Antonio Spurs;DeMarre Carroll;Forward;2.2;2.1;0.7
+San Antonio Spurs;DeMar DeRozan;Guard-Forward;22.4;4.7;5.3
+San Antonio Spurs;Drew Eubanks;Forward-Center;3.0;2.3;0.3
+Memphis Grizzlies;Grayson Allen;Guard;7.9;2.3;1.3
+Memphis Grizzlies;Kyle Anderson;Forward;5.0;3.9;2.2
+Memphis Grizzlies;Dillon Brooks;Forward;14.9;3.3;2.1
+Memphis Grizzlies;Bruno Caboclo;Forward;2.8;2.0;0.5
+Memphis Grizzlies;Brandon Clarke;Forward-Guard;12.2;5.8;1.4
+New Orleans Pelicans;Nickeil Alexander-Walker;Guard;15.6;2.2;1.9
+New Orleans Pelicans;Lonzo Ball;Guard;12.5;5.6;5.9
+New Orleans Pelicans;Zylan Cheatham;Forward;1.5;2.0;0.7
+New Orleans Pelicans;Derrick Favors;Forward;8.9;10.0;2.0
+New Orleans Pelicans;Josh Gray;Guard;1.0;1.0;1.0
+Golden State Warriors;D'Angelo Russell;Guard;23.7;3.5;6
+Golden State Warriors;Stephen Curry;Guard;20.3;5.0;6.5
+Golden State Warriors;Alec Burks;Guard;15.8;4.6;3.1
+Golden State Warriors;Eric Paschall;Forward;13.6;4.5;1.8
+Golden State Warriors;Damion Lee;Forward;12.3;5.3;2.3

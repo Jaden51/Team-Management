@@ -1096,6 +1096,7 @@ public class Main extends javax.swing.JFrame {
 
     private void showPtsBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_showPtsBtnActionPerformed
         playerList.removeAll();
+        team.clearStats();
         team.setStats();
         playerList.setModel(new javax.swing.AbstractListModel() {
             ArrayList<String> strings = team.getPoints();
@@ -1118,6 +1119,7 @@ public class Main extends javax.swing.JFrame {
 
     private void showRebBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_showRebBtnActionPerformed
         playerList.removeAll();
+        team.clearStats();
         team.setStats();
         playerList.setModel(new javax.swing.AbstractListModel() {
             ArrayList<String> strings = team.getRebounds();
@@ -1140,6 +1142,7 @@ public class Main extends javax.swing.JFrame {
 
     private void showAstBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_showAstBtnActionPerformed
         playerList.removeAll();
+        team.clearStats();
         team.setStats();
         playerList.setModel(new javax.swing.AbstractListModel() {
             ArrayList<String> strings = team.getAssists();
