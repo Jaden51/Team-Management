@@ -19,10 +19,14 @@ import java.util.ArrayList;
  */
 public class Player {
 
+    //Variables
     private String team, name, position, points, rebounds, assists;
     File playerList = new File("playerData.txt");
     private final ArrayList<String> player = new ArrayList<>();
 
+    /**
+     * Add all the players in the file
+     */
     public Player() {
         try {
             Scanner sc = new Scanner(playerList);
@@ -35,33 +39,66 @@ public class Player {
         }
     }
 
+    /**
+     * Set the team of the new player
+     *
+     * @param t
+     */
     public void setTeam(String t) {
         team = t;
     }
 
+    /**
+     * Set the name of the new player
+     *
+     * @param n
+     */
     public void setName(String n) {
         name = n;
     }
 
+    /**
+     * Set the position of the new player
+     *
+     * @param p
+     */
     public void setPosition(String p) {
         position = p;
     }
 
+    /**
+     * Set the points of the new player
+     *
+     * @param p
+     */
     public void setPoints(String p) {
         double temp = Double.parseDouble(p);
         points = String.valueOf(temp);
     }
 
+    /**
+     * Set the rebounds of the new player
+     *
+     * @param r
+     */
     public void setRebounds(String r) {
         double temp = Double.parseDouble(r);
         rebounds = String.valueOf(temp);
     }
 
+    /**
+     * Set the assists of the new player
+     *
+     * @param a
+     */
     public void setAssists(String a) {
         double temp = Double.parseDouble(a);
         assists = String.valueOf(temp);
     }
 
+    /**
+     * Create the player and put him in the file
+     */
     public void createPlayer() {
         player.add(team + ";" + name + ";" + position + ";" + points + ";" + rebounds + ";" + assists);
         try {

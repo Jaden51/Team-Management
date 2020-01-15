@@ -27,6 +27,7 @@ import org.jdesktop.swingx.autocomplete.AutoCompleteDecorator;
  */
 public class Main extends javax.swing.JFrame {
 
+    //Files and Array Lists
     File playerData = new File("playerData.txt");
     File teams = new File("teams.txt");
     ArrayList<String> playerStats = new ArrayList<>();
@@ -42,7 +43,8 @@ public class Main extends javax.swing.JFrame {
      */
     public Main() {
         initComponents();
-        updateTeams();
+        updateTeams(); //update Teams method
+        //Autocomplete for the combo boxes
         AutoCompleteDecorator.decorate(playersCombo);
         AutoCompleteDecorator.decorate(deleteCombo);
         AutoCompleteDecorator.decorate(editCombo);
@@ -398,11 +400,11 @@ public class Main extends javax.swing.JFrame {
 
         jLabel10.setText("Position");
 
-        jLabel11.setText("Points");
+        jLabel11.setText("Points**");
 
-        jLabel12.setText("Rebounds");
+        jLabel12.setText("Rebounds**");
 
-        jLabel13.setText("Assists");
+        jLabel13.setText("Assists**");
 
         addPlayer.setText("Add");
         addPlayer.addActionListener(new java.awt.event.ActionListener() {
@@ -456,7 +458,7 @@ public class Main extends javax.swing.JFrame {
         jLabel1.setBackground(new java.awt.Color(153, 204, 255));
         jLabel1.setFont(new java.awt.Font("Cambria", 1, 36)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(50, 0, 0));
-        jLabel1.setText(" Sports Management App");
+        jLabel1.setText("My Team Management App");
         jLabel1.setOpaque(true);
 
         teamEdit.setEnabled(false);
@@ -597,7 +599,7 @@ public class Main extends javax.swing.JFrame {
                                         .addComponent(exitBtn))))
                             .addComponent(editBtn)))
                     .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addGroup(layout.createSequentialGroup()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addGroup(layout.createSequentialGroup()
@@ -615,7 +617,7 @@ public class Main extends javax.swing.JFrame {
                                             .addComponent(showAstBtn, javax.swing.GroupLayout.Alignment.TRAILING))
                                         .addGap(8, 8, 8)))
                                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 167, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 424, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(playersCombo, 0, 155, Short.MAX_VALUE)
@@ -634,7 +636,7 @@ public class Main extends javax.swing.JFrame {
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(sortByPoints))
                             .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 225, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addGap(0, 12, Short.MAX_VALUE))
+                .addGap(0, 14, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -731,28 +733,26 @@ public class Main extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
+    /**
+     * Method to trade players. This switches the team of the players
+     * 
+     * @param evt 
+     */
     private void tradeBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tradeBtnActionPerformed
-        String player1 = playersCombo.getSelectedItem().toString();
-        String player2 = toTradeCombo.getSelectedItem().toString();
-        String replace1, replace2, team1;
-
-        for (int i = 0; i < playerStats.size(); i++) {
-            if (playerStats.get(i).contains(player1)) {
+        for (int i = 0; i < playerStats.size(); i++) { //go through arrayList of players
+            //if the player at i equals the player you want to trade for
+            if (playerStats.get(i).contains(playersCombo.getSelectedItem().toString())) {
                 String[] split = playerStats.get(i).split(";");
-                team1 = split[0];
-                replace1 = playerStats.get(i).replace(team1, team.getTeam());
-                playerStats.set(i, replace1);
-
-                for (int j = 0; j < playerStats.size(); j++) {
-                    if (playerStats.get(j).contains(player2)) {
-                        replace2 = playerStats.get(j).replace(team.getTeam(), team1);
-                        playerStats.set(j, replace2);
+                //replace the team of that player with the selected team
+                playerStats.set(i, playerStats.get(i).replace(split[0], team.getTeam()));
+                for (int j = 0; j < playerStats.size(); j++) { //find the player in the file on your team
+                    if (playerStats.get(j).contains(toTradeCombo.getSelectedItem().toString())) {
+                        playerStats.set(j, playerStats.get(j).replace(team.getTeam(), split[0])); //replace the team
                     }
                 }
             }
         }
-        try { //print out the user data again, updating the user which wanted to swtich password. 
+        try { //print out all the player data again to update the file with the trade which occured.
             PrintWriter output = new PrintWriter(playerData);
             for (String playerStats1 : playerStats) {
                 output.println(playerStats1);
@@ -761,22 +761,28 @@ public class Main extends javax.swing.JFrame {
         } catch (FileNotFoundException ex) {
             System.out.printf("ERROR %s\n", ex);
         }
-        updateTeamList();
-        showPtsBtn.setEnabled(true);
-        showTeamBtn.setEnabled(true);
+        updateTeamList(); //update both teams to show updated player info
+        showPtsBtn.setEnabled(true); //disable and enable buttons for better GUI
+        showTeamBtn.setEnabled(false);
         showRebBtn.setEnabled(true);
         showAstBtn.setEnabled(true);
     }//GEN-LAST:event_tradeBtnActionPerformed
-
+    /**
+     * Search for team or by position
+     * 
+     * @param evt 
+     */
     private void searchFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchFieldActionPerformed
-        searchList1.removeAll();
+        searchList1.removeAll(); //remove contents of search list
         String search = searchField.getText();
-        ArrayList<String> player1 = new ArrayList<>();
+        ArrayList<String> player1 = new ArrayList<>(); //array list to show matched search items
+        //if the search equals a position
         if (search.equals("Guard") || search.equals("Forward") || search.equals("Center")) {
             for (int i = 0; i < playerStats.size(); i++) {
                 if (playerStats.get(i).contains(search)) {
                     String[] split = playerStats.get(i).split(";");
-                    player1.add(split[1]);
+                    player1.add(split[1]); //add all the players with that position to the array list
+                    //display the arraylist on the search list
                     searchList1.setModel(new javax.swing.AbstractListModel() {
                         ArrayList<String> strings = player1;
 
@@ -792,6 +798,7 @@ public class Main extends javax.swing.JFrame {
                     });
                 }
             }
+            //repeat above except for teams
         } else if (search.equals("Denver Nuggets")
                 || search.equals("Los Angeles Lakers")
                 || search.equals("Los Angeles Clippers")
@@ -827,14 +834,19 @@ public class Main extends javax.swing.JFrame {
                 }
             }
         } else {
+            //error if cannot find what you searched for. 
             JOptionPane.showMessageDialog(this, "Please enter team or position");
         }
     }//GEN-LAST:event_searchFieldActionPerformed
-
+    /**
+     * Add player based on the data entered in the add player fields
+     * 
+     * @param evt 
+     */
     private void addPlayerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addPlayerActionPerformed
-        Player player = new Player();
+        Player player = new Player(); //create a new player
         boolean proceed;
-
+        //error check. Check that user inputed numbers for the stats
         try {
             double userInput = Double.parseDouble(pointsField.getText());
             double userInput2 = Double.parseDouble(reboundsField.getText());
@@ -843,37 +855,40 @@ public class Main extends javax.swing.JFrame {
         } catch (NumberFormatException ignore) {
             proceed = false;
         }
-        if (proceed == true) {
+        if (proceed == true) { //if no errors found
             player.setTeam(teamField.getText());
             player.setName(nameField.getText());
             player.setPosition(positionField.getText());
             player.setPoints(pointsField.getText());
             player.setRebounds(reboundsField.getText());
             player.setAssists(assistsField.getText());
-            player.createPlayer();
-            updateTeams();
-            teamField.setText(null);
+            player.createPlayer(); //create a new player
+            updateTeams(); //update the teams
+            teamField.setText(null); //making GUI function better
             nameField.setText(null);
             positionField.setText(null);
             pointsField.setText(null);
             reboundsField.setText(null);
             assistsField.setText(null);
-        } else if (proceed == false) {
+        } else if (proceed == false) { //message to say invalid input if text was entered to stats field
             JOptionPane.showMessageDialog(this, "Invalid Input");
         }
     }//GEN-LAST:event_addPlayerActionPerformed
-
+    /**
+     * Delete the selected player in the combo box
+     * 
+     * @param evt 
+     */
     private void deleteBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteBtnActionPerformed
-        int j = JOptionPane.showConfirmDialog(this, "Confirm Delete");
-        if (j == 0) {
-            String delete = deleteCombo.getSelectedItem().toString();
+        int j = JOptionPane.showConfirmDialog(this, "Confirm Delete"); //ask for confirmation
+        if (j == 0) { //if user clicks detele, delete player, if anything else is clicked, cancel operation
             for (int i = 0; i < playerStats.size(); i++) {
-                if (playerStats.get(i).contains(delete)) {
+                if (playerStats.get(i).contains(deleteCombo.getSelectedItem().toString())) {
                     playerStats.remove(i);
                 }
             }
 
-            try {
+            try { //rewrite the file with the deleted player gone
                 PrintWriter output = new PrintWriter(playerData);
                 output.print("");
                 for (String playerStat : playerStats) {
@@ -883,32 +898,36 @@ public class Main extends javax.swing.JFrame {
             } catch (FileNotFoundException ex) {
                 System.out.printf("ERROR %s\n", ex);
             }
-            updateTeams();
+            updateTeams(); //update teams
         }
     }//GEN-LAST:event_deleteBtnActionPerformed
-
+    /**
+     * Get all the players in the playerData file and sort than by points
+     * 
+     * @param evt 
+     */
     private void sortByPointsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_sortByPointsActionPerformed
-        sortedList.removeAll();
+        sortedList.removeAll(); //clear sorted list and arraylist
         sortPoints.clear();
         ArrayList<String> sorted = new ArrayList<>();
         for (String playerStat : playerStats) {
             String[] split = playerStat.split(";");
             double temp = Double.parseDouble(split[3]);
 
-            sortPoints.add(temp);
+            sortPoints.add(temp); //split the points of all the players
         }
 
         if (sortByPoints.getText().contains("↓")) {
-            sortPoints = sortPointsAscending(sortPoints);
+            sortPoints = sortPointsAscending(sortPoints); //sort the points ascending
             sortByPoints.setText("Sort By Points ↑");
         } else {
-            sortPoints = sortPointsDescending(sortPoints);
+            sortPoints = sortPointsDescending(sortPoints); //sort the points descending
             sortByPoints.setText("Sort By Points ↓");
         }
-        for (int i = 0; i < sortPoints.size(); i++) {
-            sorted.add(Double.toString(sortPoints.get(i)));
+        for (Double sortPoint : sortPoints) {
+            sorted.add(Double.toString(sortPoint)); //add the sorted points to a new arraylist
         }
-        for (int i = 0; i < sorted.size(); i++) {
+        for (int i = 0; i < sorted.size(); i++) { //go through the sorted list and match the point to the player
             for (int j = 0; j < sorted.size(); j++) {
                 String split[] = playerStats.get(j).split(";");
                 if (split[3].equals(sorted.get(i))) {
@@ -917,7 +936,7 @@ public class Main extends javax.swing.JFrame {
             }
         }
         sortedList.setModel(new javax.swing.AbstractListModel() {
-            ArrayList<String> strings = sorted;
+            ArrayList<String> strings = sorted; //display the sorted list
 
             @Override
             public int getSize() {
@@ -930,25 +949,29 @@ public class Main extends javax.swing.JFrame {
             }
         });
     }//GEN-LAST:event_sortByPointsActionPerformed
-
+    /**
+     * Get all the players in the playerData file and sort than by name
+     * 
+     * @param evt 
+     */
     private void sortByNameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_sortByNameActionPerformed
-        sortedList.removeAll();
+        sortedList.removeAll(); //clear everything
         sortNames.clear();
-        for (String playerStat : playerStats) {
+        for (String playerStat : playerStats) { //run through arraylist
             String[] split = playerStat.split(";");
-            sortNames.add(split[1]);
+            sortNames.add(split[1]); //split by names
         }
 
         if (sortByName.getText().contains("↓")) {
-            sortNames = sortStringAscending(sortNames);
+            sortNames = sortStringAscending(sortNames); //sort by name ascending
             sortByName.setText("Sort By Name ↑");
         } else {
-            sortNames = sortStringDescending(sortNames);
+            sortNames = sortStringDescending(sortNames); //sort by name descending
             sortByName.setText("Sort By Name ↓");
         }
 
         sortedList.setModel(new javax.swing.AbstractListModel() {
-            ArrayList<String> strings = sortNames;
+            ArrayList<String> strings = sortNames; //display sorted list
 
             @Override
             public int getSize() {
@@ -961,17 +984,20 @@ public class Main extends javax.swing.JFrame {
             }
         });
     }//GEN-LAST:event_sortByNameActionPerformed
-
+    /**
+     * Display players based on the team selected
+     * 
+     * @param evt 
+     */
     private void teamComboActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_teamComboActionPerformed
-        team.clearPlayers();
-        playerList.removeAll();
-        playersAvailable.clear();
-        String teamStr = teamCombo.getSelectedItem().toString();
-        team.setTeam(teamStr);
-        team.setPlayersOnly();
+        team.clearPlayers(); //clear all players from the previous team
+        playerList.removeAll(); //clear your team's player list
+        playersAvailable.clear(); //clear the players not on your team
+        team.setTeam(teamCombo.getSelectedItem().toString()); //set team to new team selected
+        team.setPlayersOnly(); //set the players of the new team
         toTradeCombo.setModel(new DefaultComboBoxModel(team.getPlayersOnly().toArray()));
         playerList.setModel(new javax.swing.AbstractListModel() {
-            ArrayList<String> strings = team.getPlayersOnly();
+            ArrayList<String> strings = team.getPlayersOnly(); //display new players
 
             @Override
             public int getSize() {
@@ -983,7 +1009,7 @@ public class Main extends javax.swing.JFrame {
                 return strings.get(i);
             }
         });
-
+        //if the player isn't on your new team, they are now available to trade for
         for (String playerStat : playerStats) {
             if (!playerStat.contains(team.getTeam())) {
                 String[] split = playerStat.split(";");
@@ -991,10 +1017,11 @@ public class Main extends javax.swing.JFrame {
                 playersAvailable.add(player);
             }
         }
+        //GUI funcitonality
         playersCombo.setModel(new DefaultComboBoxModel(playersAvailable.toArray()));
         getContentPane().add(playersCombo);
         showPtsBtn.setEnabled(true);
-        showTeamBtn.setEnabled(true);
+        showTeamBtn.setEnabled(false);
         showRebBtn.setEnabled(true);
         showAstBtn.setEnabled(true);
         playerList.setEnabled(true);
@@ -1002,10 +1029,15 @@ public class Main extends javax.swing.JFrame {
         tradeBtn.setEnabled(true);
         playersCombo.setEnabled(true);
     }//GEN-LAST:event_teamComboActionPerformed
-
+    /**
+     * Display the edit fields based on player selected
+     * 
+     * @param evt 
+     */
     private void editComboActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_editComboActionPerformed
-        String player = editCombo.getSelectedItem().toString();
+        String player = editCombo.getSelectedItem().toString(); //get player in edit combo
         String editPlayer;
+        //run through player list, find the player and display their info
         for (String playerStat : playerStats) {
             if (playerStat.contains(player)) {
                 editPlayer = playerStat;
@@ -1018,17 +1050,22 @@ public class Main extends javax.swing.JFrame {
                 assistsEdit.setText(split[5]);
             }
         }
-        teamEdit.setEnabled(true);
+        teamEdit.setEnabled(true); //enable editing
         nameEdit.setEnabled(true);
         positionEdit.setEnabled(true);
         pointsEdit.setEnabled(true);
         reboundsEdit.setEnabled(true);
         assistsEdit.setEnabled(true);
     }//GEN-LAST:event_editComboActionPerformed
-
+    /**
+     * Get the text in the edit fields and the button proceeds to edit the player
+     * 
+     * @param evt 
+     */
     private void editBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_editBtnActionPerformed
-        String player = editCombo.getSelectedItem().toString();
+        String player = editCombo.getSelectedItem().toString(); //get player
         boolean proceed;
+        //error check
         try {
             double userInput = Double.parseDouble(pointsEdit.getText());
             double userInput2 = Double.parseDouble(reboundsEdit.getText());
@@ -1037,22 +1074,20 @@ public class Main extends javax.swing.JFrame {
         } catch (NumberFormatException ignore) {
             proceed = false;
         }
-        System.out.println(nameEdit.getText());
+        //if no errors found
         if (proceed == true) {
             double temp1 = Double.parseDouble(pointsEdit.getText());
             double temp2 = Double.parseDouble(reboundsEdit.getText());
             double temp3 = Double.parseDouble(assistsEdit.getText());
-            System.out.println(temp1 + " " + temp2 + " " + temp3);
-            for (int i = 0; i < playerStats.size(); i++) {
-                if (playerStats.get(i).contains(player)) {
-                    System.out.println(playerStats.get(i));
+            for (int i = 0; i < playerStats.size(); i++) { //run through players
+                if (playerStats.get(i).contains(player)) { //if player found
                     playerStats.remove(i);
                     playerStats.add(teamEdit.getText() + ";" + nameEdit.getText() + ";"
                             + positionEdit.getText() + ";" + String.valueOf(temp1) + ";"
-                            + String.valueOf(temp2) + ";" + String.valueOf(temp3));
+                            + String.valueOf(temp2) + ";" + String.valueOf(temp3)); //edit player information
                 }
             }
-            try {
+            try { //rewrite the file
                 PrintWriter output = new PrintWriter(playerData);
                 output.print("");
                 for (String playerStat : playerStats) {
@@ -1062,8 +1097,8 @@ public class Main extends javax.swing.JFrame {
             } catch (FileNotFoundException ex) {
                 System.out.printf("ERROR %s\n", ex);
             }
-            updateTeams();
-            teamEdit.setText(null);
+            updateTeams(); //update the teams
+            teamEdit.setText(null); //GUI
             nameEdit.setText(null);
             positionEdit.setText(null);
             pointsEdit.setText(null);
@@ -1075,13 +1110,18 @@ public class Main extends javax.swing.JFrame {
             pointsEdit.setEnabled(false);
             reboundsEdit.setEnabled(false);
             assistsEdit.setEnabled(false);
-        } else if (proceed == false) {
+        } else if (proceed == false) { //if players found, show message
             JOptionPane.showMessageDialog(this, "Invalid Input");
         }
     }//GEN-LAST:event_editBtnActionPerformed
-
+    /**
+     * Open user manual
+     *
+     * @param evt
+     */
     private void userManualBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_userManualBtnActionPerformed
         try {
+            //Open user manual
             Desktop.getDesktop().browse(new URL("https://docs.google.com/document/d/1iZ_9PKa2-i4i14FtXcczY7LPhd-jezXuj72LVG5zm98/edit").toURI());
         } catch (MalformedURLException ex) {
             Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
@@ -1089,17 +1129,25 @@ public class Main extends javax.swing.JFrame {
             Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_userManualBtnActionPerformed
-
+    /**
+     * Exit program button
+     *
+     * @param evt
+     */
     private void exitBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_exitBtnActionPerformed
         System.exit(0);
     }//GEN-LAST:event_exitBtnActionPerformed
-
+    /**
+     * Display your teams points
+     *
+     * @param evt
+     */
     private void showPtsBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_showPtsBtnActionPerformed
-        playerList.removeAll();
-        team.clearStats();
-        team.setStats();
+        playerList.removeAll(); //clear list
+        team.clearStats(); //clear stats
+        team.setStats(); //set stats
         playerList.setModel(new javax.swing.AbstractListModel() {
-            ArrayList<String> strings = team.getPoints();
+            ArrayList<String> strings = team.getPoints(); //display points
 
             @Override
             public int getSize() {
@@ -1116,13 +1164,17 @@ public class Main extends javax.swing.JFrame {
         showRebBtn.setEnabled(true);
         showAstBtn.setEnabled(true);
     }//GEN-LAST:event_showPtsBtnActionPerformed
-
+    /**
+     * Display your teams rebounds
+     *
+     * @param evt
+     */
     private void showRebBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_showRebBtnActionPerformed
-        playerList.removeAll();
-        team.clearStats();
-        team.setStats();
+        playerList.removeAll(); //clear list
+        team.clearStats(); //clear stats 
+        team.setStats(); //set stats
         playerList.setModel(new javax.swing.AbstractListModel() {
-            ArrayList<String> strings = team.getRebounds();
+            ArrayList<String> strings = team.getRebounds(); //display rebounds
 
             @Override
             public int getSize() {
@@ -1139,13 +1191,17 @@ public class Main extends javax.swing.JFrame {
         showRebBtn.setEnabled(false);
         showAstBtn.setEnabled(true);
     }//GEN-LAST:event_showRebBtnActionPerformed
-
+    /**
+     * Display your teams assists
+     *
+     * @param evt
+     */
     private void showAstBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_showAstBtnActionPerformed
-        playerList.removeAll();
-        team.clearStats();
-        team.setStats();
+        playerList.removeAll(); //clear list
+        team.clearStats(); //clear stats
+        team.setStats(); //set stats
         playerList.setModel(new javax.swing.AbstractListModel() {
-            ArrayList<String> strings = team.getAssists();
+            ArrayList<String> strings = team.getAssists(); //display assists
 
             @Override
             public int getSize() {
@@ -1162,11 +1218,15 @@ public class Main extends javax.swing.JFrame {
         showRebBtn.setEnabled(true);
         showAstBtn.setEnabled(false);
     }//GEN-LAST:event_showAstBtnActionPerformed
-
+    /**
+     * Display your team.
+     *
+     * @param evt
+     */
     private void showTeamBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_showTeamBtnActionPerformed
-        playerList.removeAll();
+        playerList.removeAll(); //remove list
         playerList.setModel(new javax.swing.AbstractListModel() {
-            ArrayList<String> strings = team.getPlayersOnly();
+            ArrayList<String> strings = team.getPlayersOnly(); //show team
 
             @Override
             public int getSize() {
@@ -1220,17 +1280,21 @@ public class Main extends javax.swing.JFrame {
         });
     }
 
+    /**
+     * This method is for updating the players of the team selected using the
+     * team object
+     */
     public void updateTeamList() {
-        playersAvailable.clear();
-        team.clearPlayers();
-        team.setPlayers();
-        team.setPlayersOnly();
-        team.clearStats();
-        playerList.removeAll();
+        playersAvailable.clear(); //clear players available to trade
+        team.clearPlayers(); //clear players on the team
+        team.setPlayers(); //set players on the new team
+        team.setPlayersOnly(); //set the players only (no stats)
+        team.clearStats(); //clear their stats
+        playerList.removeAll(); //remove from your team list
 
         toTradeCombo.setModel(new DefaultComboBoxModel(team.getPlayersOnly().toArray()));
         playerList.setModel(new javax.swing.AbstractListModel() {
-            ArrayList<String> strings = team.getPlayersOnly();
+            ArrayList<String> strings = team.getPlayersOnly(); //display only the players on your team
 
             @Override
             public int getSize() {
@@ -1242,40 +1306,44 @@ public class Main extends javax.swing.JFrame {
                 return strings.get(i);
             }
         });
-        for (String playerStat : playerStats) {
+        for (String playerStat : playerStats) { //find the players available to trade for
             if (!playerStat.contains(team.getTeam())) {
                 String[] split = playerStat.split(";");
                 String player = split[1];
                 playersAvailable.add(player);
             }
         }
+        //set playerscombo
         playersCombo.setModel(new DefaultComboBoxModel(playersAvailable.toArray()));
     }
 
+    /**
+     * Method used to update the team info based on the team which you selected
+     */
     private void updateTeams() {
-        playerStats.clear();
+        playerStats.clear(); //clear everything 
         teamList.clear();
         players.clear();
-        try {
+        try { //read through team file to get all teams
             Scanner sc = new Scanner(teams);
             while (sc.hasNextLine()) {
-                teamList.add(sc.nextLine());
+                teamList.add(sc.nextLine()); //add teams to team list
             }
-            Scanner sc2 = new Scanner(playerData);
+            Scanner sc2 = new Scanner(playerData); //read through playerData file
             while (sc2.hasNextLine()) {
-                playerStats.add(sc2.nextLine());
+                playerStats.add(sc2.nextLine()); //add the players
             }
             sc.close();
         } catch (FileNotFoundException ex) {
             Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
         }
         teamCombo.setModel(new DefaultComboBoxModel(teamList.toArray()));
-        for (String playerStat : playerStats) {
+        for (String playerStat : playerStats) { //add ALL players only. 
             String[] split = playerStat.split(";");
             players.add(split[1]);
         }
         sortedList.setModel(new javax.swing.AbstractListModel() {
-            ArrayList<String> strings = players;
+            ArrayList<String> strings = players; //display the list of ALL players
 
             @Override
             public int getSize() {
@@ -1291,6 +1359,12 @@ public class Main extends javax.swing.JFrame {
         editCombo.setModel(new DefaultComboBoxModel(players.toArray()));
     }
 
+    /**
+     * Sort names in ascending order
+     *
+     * @param listIn
+     * @return
+     */
     public static ArrayList sortStringAscending(ArrayList<String> listIn) {
         for (int i = 0; i < listIn.size(); i++) { //repeat for list size
             int index = i; //set index to i
@@ -1308,6 +1382,12 @@ public class Main extends javax.swing.JFrame {
         return listIn;
     }
 
+    /**
+     * Sort names in descending order
+     *
+     * @param listIn
+     * @return
+     */
     public static ArrayList sortStringDescending(ArrayList<String> listIn) {
         for (int i = 0; i < listIn.size(); i++) { //repeat for list size
             int index = i; //set index to i
@@ -1325,6 +1405,12 @@ public class Main extends javax.swing.JFrame {
         return listIn;
     }
 
+    /**
+     * Sort points in ascending order
+     *
+     * @param listIn
+     * @return
+     */
     public static ArrayList sortPointsAscending(ArrayList<Double> listIn) {
         for (int i = 0; i < listIn.size(); i++) { //repeat for list size
             int index = i; //set index to i
@@ -1342,6 +1428,12 @@ public class Main extends javax.swing.JFrame {
         return listIn;
     }
 
+    /**
+     * Sort points in descending order
+     *
+     * @param listIn
+     * @return
+     */
     public static ArrayList sortPointsDescending(ArrayList<Double> listIn) {
         for (int i = 0; i < listIn.size(); i++) { //repeat for list size
             int index = i; //set index to i

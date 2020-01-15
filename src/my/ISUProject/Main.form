@@ -420,8 +420,8 @@
                       </Group>
                   </Group>
                   <Group type="102" alignment="0" attributes="0">
-                      <Group type="103" groupAlignment="0" attributes="0">
-                          <Group type="102" alignment="0" attributes="0">
+                      <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                          <Group type="102" attributes="0">
                               <Group type="103" groupAlignment="0" attributes="0">
                                   <Group type="102" alignment="0" attributes="0">
                                       <Component id="jLabel2" min="-2" pref="90" max="-2" attributes="0"/>
@@ -444,7 +444,7 @@
                               </Group>
                               <Component id="jScrollPane1" min="-2" pref="167" max="-2" attributes="0"/>
                           </Group>
-                          <Component id="jLabel1" alignment="0" min="-2" pref="424" max="-2" attributes="0"/>
+                          <Component id="jLabel1" max="32767" attributes="0"/>
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" max="-2" attributes="0">
@@ -471,7 +471,7 @@
                       </Group>
                   </Group>
               </Group>
-              <EmptySpace min="0" pref="12" max="32767" attributes="0"/>
+              <EmptySpace min="0" pref="14" max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -711,17 +711,17 @@
     </Component>
     <Component class="javax.swing.JLabel" name="jLabel11">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Points"/>
+        <Property name="text" type="java.lang.String" value="Points**"/>
       </Properties>
     </Component>
     <Component class="javax.swing.JLabel" name="jLabel12">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Rebounds"/>
+        <Property name="text" type="java.lang.String" value="Rebounds**"/>
       </Properties>
     </Component>
     <Component class="javax.swing.JLabel" name="jLabel13">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Assists"/>
+        <Property name="text" type="java.lang.String" value="Assists**"/>
       </Properties>
     </Component>
     <Component class="javax.swing.JButton" name="addPlayer">
@@ -818,7 +818,7 @@
         <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
           <Color blue="0" green="0" red="32" type="rgb"/>
         </Property>
-        <Property name="text" type="java.lang.String" value=" Sports Management App"/>
+        <Property name="text" type="java.lang.String" value="My Team Management App"/>
         <Property name="opaque" type="boolean" value="true"/>
       </Properties>
     </Component>
