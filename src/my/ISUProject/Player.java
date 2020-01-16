@@ -120,7 +120,7 @@ public class Player {
                 System.out.printf("ERROR %s\n", ex);
             }
         } else if (proceed == false) { //if player already exists
-            JOptionPane.showMessageDialog(null, "Player Already exists");
+            JOptionPane.showMessageDialog(null, "Player Already Exists");
         }
     }
 }
