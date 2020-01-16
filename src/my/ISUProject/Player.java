@@ -12,6 +12,7 @@ import java.io.PrintWriter;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.ArrayList;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -100,15 +101,26 @@ public class Player {
      * Create the player and put him in the file
      */
     public void createPlayer() {
-        player.add(team + ";" + name + ";" + position + ";" + points + ";" + rebounds + ";" + assists);
-        try {
-            PrintWriter output = new PrintWriter(playerList); //new PrintWriter to the file
-            for (String player1 : player) { //for every element in the array list, print out the data
-                output.println(player1);
+        String playerCheck = (team + ";" + name + ";" + position + ";" + points + ";" + rebounds + ";" + assists);
+        boolean proceed = true;
+        for (String player1 : player) { //check to see if player already exists
+            if (player1.equals(playerCheck)) {
+                proceed = false;
             }
-            output.close();
-        } catch (FileNotFoundException ex) {
-            System.out.printf("ERROR %s\n", ex);
+        }
+        if (proceed == true) { //if new player, create new player
+            player.add(playerCheck);
+            try {
+                PrintWriter output = new PrintWriter(playerList); //new PrintWriter to the file
+                for (String player1 : player) { //for every element in the array list, print out the data
+                    output.println(player1);
+                }
+                output.close();
+            } catch (FileNotFoundException ex) {
+                System.out.printf("ERROR %s\n", ex);
+            }
+        } else if (proceed == false) { //if player already exists
+            JOptionPane.showMessageDialog(null, "Player Already exists");
         }
     }
 }

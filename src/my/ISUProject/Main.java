@@ -131,6 +131,7 @@ public class Main extends javax.swing.JFrame {
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         errorLabel = new javax.swing.JLabel();
+        helpBtn = new javax.swing.JButton();
 
         javax.swing.GroupLayout jDialog1Layout = new javax.swing.GroupLayout(jDialog1.getContentPane());
         jDialog1.getContentPane().setLayout(jDialog1Layout);
@@ -533,6 +534,13 @@ public class Main extends javax.swing.JFrame {
 
         jLabel4.setText("Players Available");
 
+        helpBtn.setText("Help");
+        helpBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                helpBtnActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -592,12 +600,14 @@ public class Main extends javax.swing.JFrame {
                                         .addGroup(layout.createSequentialGroup()
                                             .addGap(0, 0, Short.MAX_VALUE)
                                             .addComponent(searchField, javax.swing.GroupLayout.PREFERRED_SIZE, 165, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                                    .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 165, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addComponent(userManualBtn)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(exitBtn))))
-                            .addComponent(editBtn)))
+                                    .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 165, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(editBtn)
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                .addComponent(userManualBtn)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(helpBtn)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(exitBtn))))
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addGroup(layout.createSequentialGroup()
@@ -727,7 +737,8 @@ public class Main extends javax.swing.JFrame {
                     .addComponent(errorLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(exitBtn)
-                        .addComponent(userManualBtn)))
+                        .addComponent(userManualBtn)
+                        .addComponent(helpBtn)))
                 .addContainerGap())
         );
 
@@ -1122,7 +1133,7 @@ public class Main extends javax.swing.JFrame {
     private void userManualBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_userManualBtnActionPerformed
         try {
             //Open user manual
-            Desktop.getDesktop().browse(new URL("https://docs.google.com/document/d/1iZ_9PKa2-i4i14FtXcczY7LPhd-jezXuj72LVG5zm98/edit").toURI());
+            Desktop.getDesktop().browse(new URL("https://docs.google.com/document/d/15v-SNK6VOF_pGVMhA9iaHyW75uNILTdyNQ436ka-uvo/edit?usp=sharing").toURI());
         } catch (MalformedURLException ex) {
             Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
         } catch (URISyntaxException | IOException ex) {
@@ -1243,6 +1254,10 @@ public class Main extends javax.swing.JFrame {
         showRebBtn.setEnabled(true);
         showAstBtn.setEnabled(true);
     }//GEN-LAST:event_showTeamBtnActionPerformed
+
+    private void helpBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_helpBtnActionPerformed
+        JOptionPane.showMessageDialog(this, "Email 'jadenhums51@gmail.com' for help");
+    }//GEN-LAST:event_helpBtnActionPerformed
 
     /**
      * @param args the command line arguments
@@ -1462,6 +1477,7 @@ public class Main extends javax.swing.JFrame {
     private javax.swing.JComboBox editCombo;
     private javax.swing.JLabel errorLabel;
     private javax.swing.JButton exitBtn;
+    private javax.swing.JButton helpBtn;
     private javax.swing.JDialog jDialog1;
     private javax.swing.JDialog jDialog10;
     private javax.swing.JDialog jDialog11;
