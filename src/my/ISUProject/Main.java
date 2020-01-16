@@ -891,20 +891,9 @@ public class Main extends javax.swing.JFrame {
             pointsField.setText(null);
             reboundsField.setText(null);
             assistsField.setText(null);
-            teamEdit.setText(null); //GUI
-            nameEdit.setText(null);
-            positionEdit.setText(null);
-            pointsEdit.setText(null);
-            reboundsEdit.setText(null);
-            assistsEdit.setText(null);
-            teamEdit.setEnabled(false);
-            nameEdit.setEnabled(false);
-            positionEdit.setEnabled(false);
-            pointsEdit.setEnabled(false);
-            reboundsEdit.setEnabled(false);
-            assistsEdit.setEnabled(false);
+            GUI();
             JOptionPane.showMessageDialog(this, "Add player Successful");
-        } else if (proceed == true || teamField.getText().equals("") || nameField.getText().equals("") || positionField.getText().equals("")) { //message to say invalid input if text was entered to stats field
+        } else if (proceed == false || teamField.getText().equals("") || nameField.getText().equals("") || positionField.getText().equals("")) { //message to say invalid input if text was entered to stats field
             JOptionPane.showMessageDialog(this, "Invalid Input");
         }
     }//GEN-LAST:event_addPlayerActionPerformed
@@ -934,18 +923,7 @@ public class Main extends javax.swing.JFrame {
             }
             updateTeams(); //update teams
         }
-        teamEdit.setText(null); //GUI
-        nameEdit.setText(null);
-        positionEdit.setText(null);
-        pointsEdit.setText(null);
-        reboundsEdit.setText(null);
-        assistsEdit.setText(null);
-        teamEdit.setEnabled(false);
-        nameEdit.setEnabled(false);
-        positionEdit.setEnabled(false);
-        pointsEdit.setEnabled(false);
-        reboundsEdit.setEnabled(false);
-        assistsEdit.setEnabled(false);
+        GUI();
     }//GEN-LAST:event_deleteBtnActionPerformed
     /**
      * Get all the players in the playerData file and sort than by points
@@ -1501,6 +1479,23 @@ public class Main extends javax.swing.JFrame {
             }
         }
         return listIn;
+    }
+    /**
+     * Method to control GUI
+     */
+    public void GUI() {
+        teamEdit.setText(null);
+        nameEdit.setText(null);
+        positionEdit.setText(null);
+        pointsEdit.setText(null);
+        reboundsEdit.setText(null);
+        assistsEdit.setText(null);
+        teamEdit.setEnabled(false);
+        nameEdit.setEnabled(false);
+        positionEdit.setEnabled(false);
+        pointsEdit.setEnabled(false);
+        reboundsEdit.setEnabled(false);
+        assistsEdit.setEnabled(false);
     }
 
 
