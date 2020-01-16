@@ -756,8 +756,8 @@ public class Main extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
     /**
      * Method to trade players. This switches the team of the players
-     * 
-     * @param evt 
+     *
+     * @param evt
      */
     private void tradeBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tradeBtnActionPerformed
         for (int i = 0; i < playerStats.size(); i++) { //go through arrayList of players
@@ -790,8 +790,8 @@ public class Main extends javax.swing.JFrame {
     }//GEN-LAST:event_tradeBtnActionPerformed
     /**
      * Search for team or by position
-     * 
-     * @param evt 
+     *
+     * @param evt
      */
     private void searchFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchFieldActionPerformed
         searchList1.removeAll(); //remove contents of search list
@@ -861,8 +861,8 @@ public class Main extends javax.swing.JFrame {
     }//GEN-LAST:event_searchFieldActionPerformed
     /**
      * Add player based on the data entered in the add player fields
-     * 
-     * @param evt 
+     *
+     * @param evt
      */
     private void addPlayerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addPlayerActionPerformed
         Player player = new Player(); //create a new player
@@ -876,7 +876,7 @@ public class Main extends javax.swing.JFrame {
         } catch (NumberFormatException ignore) {
             proceed = false;
         }
-        if (proceed == true) { //if no errors found
+        if (proceed == true && !teamField.getText().equals("") && !nameField.getText().equals("") && !positionField.getText().equals("")) { //if no errors found
             player.setTeam(teamField.getText());
             player.setName(nameField.getText());
             player.setPosition(positionField.getText());
@@ -891,14 +891,27 @@ public class Main extends javax.swing.JFrame {
             pointsField.setText(null);
             reboundsField.setText(null);
             assistsField.setText(null);
-        } else if (proceed == false) { //message to say invalid input if text was entered to stats field
+            teamEdit.setText(null); //GUI
+            nameEdit.setText(null);
+            positionEdit.setText(null);
+            pointsEdit.setText(null);
+            reboundsEdit.setText(null);
+            assistsEdit.setText(null);
+            teamEdit.setEnabled(false);
+            nameEdit.setEnabled(false);
+            positionEdit.setEnabled(false);
+            pointsEdit.setEnabled(false);
+            reboundsEdit.setEnabled(false);
+            assistsEdit.setEnabled(false);
+            JOptionPane.showMessageDialog(this, "Add player Successful");
+        } else if (proceed == true || teamField.getText().equals("") || nameField.getText().equals("") || positionField.getText().equals("")) { //message to say invalid input if text was entered to stats field
             JOptionPane.showMessageDialog(this, "Invalid Input");
         }
     }//GEN-LAST:event_addPlayerActionPerformed
     /**
      * Delete the selected player in the combo box
-     * 
-     * @param evt 
+     *
+     * @param evt
      */
     private void deleteBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteBtnActionPerformed
         int j = JOptionPane.showConfirmDialog(this, "Confirm Delete"); //ask for confirmation
@@ -921,11 +934,23 @@ public class Main extends javax.swing.JFrame {
             }
             updateTeams(); //update teams
         }
+        teamEdit.setText(null); //GUI
+        nameEdit.setText(null);
+        positionEdit.setText(null);
+        pointsEdit.setText(null);
+        reboundsEdit.setText(null);
+        assistsEdit.setText(null);
+        teamEdit.setEnabled(false);
+        nameEdit.setEnabled(false);
+        positionEdit.setEnabled(false);
+        pointsEdit.setEnabled(false);
+        reboundsEdit.setEnabled(false);
+        assistsEdit.setEnabled(false);
     }//GEN-LAST:event_deleteBtnActionPerformed
     /**
      * Get all the players in the playerData file and sort than by points
-     * 
-     * @param evt 
+     *
+     * @param evt
      */
     private void sortByPointsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_sortByPointsActionPerformed
         sortedList.removeAll(); //clear sorted list and arraylist
@@ -972,8 +997,8 @@ public class Main extends javax.swing.JFrame {
     }//GEN-LAST:event_sortByPointsActionPerformed
     /**
      * Get all the players in the playerData file and sort than by name
-     * 
-     * @param evt 
+     *
+     * @param evt
      */
     private void sortByNameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_sortByNameActionPerformed
         sortedList.removeAll(); //clear everything
@@ -1007,8 +1032,8 @@ public class Main extends javax.swing.JFrame {
     }//GEN-LAST:event_sortByNameActionPerformed
     /**
      * Display players based on the team selected
-     * 
-     * @param evt 
+     *
+     * @param evt
      */
     private void teamComboActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_teamComboActionPerformed
         team.clearPlayers(); //clear all players from the previous team
@@ -1052,8 +1077,8 @@ public class Main extends javax.swing.JFrame {
     }//GEN-LAST:event_teamComboActionPerformed
     /**
      * Display the edit fields based on player selected
-     * 
-     * @param evt 
+     *
+     * @param evt
      */
     private void editComboActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_editComboActionPerformed
         String player = editCombo.getSelectedItem().toString(); //get player in edit combo
@@ -1079,9 +1104,10 @@ public class Main extends javax.swing.JFrame {
         assistsEdit.setEnabled(true);
     }//GEN-LAST:event_editComboActionPerformed
     /**
-     * Get the text in the edit fields and the button proceeds to edit the player
-     * 
-     * @param evt 
+     * Get the text in the edit fields and the button proceeds to edit the
+     * player
+     *
+     * @param evt
      */
     private void editBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_editBtnActionPerformed
         String player = editCombo.getSelectedItem().toString(); //get player
@@ -1096,7 +1122,7 @@ public class Main extends javax.swing.JFrame {
             proceed = false;
         }
         //if no errors found
-        if (proceed == true) {
+        if (proceed == true && !nameEdit.getText().equals("") && !teamEdit.getText().equals("") && !positionEdit.getText().equals("")) {
             double temp1 = Double.parseDouble(pointsEdit.getText());
             double temp2 = Double.parseDouble(reboundsEdit.getText());
             double temp3 = Double.parseDouble(assistsEdit.getText());
@@ -1131,7 +1157,8 @@ public class Main extends javax.swing.JFrame {
             pointsEdit.setEnabled(false);
             reboundsEdit.setEnabled(false);
             assistsEdit.setEnabled(false);
-        } else if (proceed == false) { //if players found, show message
+            JOptionPane.showMessageDialog(this, "Edit Successful");
+        } else if (proceed == false || nameEdit.getText().equals("") || teamEdit.getText().equals("") || positionEdit.getText().equals("")) { //if players found, show message
             JOptionPane.showMessageDialog(this, "Invalid Input");
         }
     }//GEN-LAST:event_editBtnActionPerformed
